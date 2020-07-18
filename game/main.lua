@@ -12,23 +12,6 @@ local buttons = {
         end,
         onclick = function()
             scoreA = 0
-        end,
-        w = function(w, h)
-            return 0.3 * w
-        end,
-        h = function(w, h)
-            return 0.09 * h
-        end,
-        font = "button"
-    }, {
-        text = "ZERAR",
-        x = function(w, h)
-            return 0.6 * w
-        end,
-        y = function(w, h)
-            return 0.6 * h
-        end,
-        onclick = function()
             scoreB = 0
         end,
         w = function(w, h)
