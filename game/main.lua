@@ -1,36 +1,36 @@
-local BLACK = { 0, 0, 0 }
+local PANTONE_561_C = { 0, 89/256, 76/256 }
 local scoreA = 0
 local scoreB = 0
 local buttons = {
     {
         text = "ZERAR",
         x = function(w, h)
-            return 0.3 * w
+            return 0.25 * w
         end,
         y = function(w, h)
-            return 0.6 * h
+            return 0.55 * h
         end,
         onclick = function()
             scoreA = 0
             scoreB = 0
         end,
         w = function(w, h)
-            return 0.3 * w
+            return 0.5 * w
         end,
         h = function(w, h)
-            return 0.09 * h
+            return 0.2 * h
         end,
-        font = "button"
+        font = "small"
     }, {
         text = "+",
         x = function(w, h)
-            return 0.3 * w
+            return 0.20 * w
         end,
         y = function(w, h)
             return 0.7 * h
         end,
         w = function(w, h)
-            return 0.3 * w
+            return 0.1 * w
         end,
         h = function(w, h)
             return 0.09 * h
@@ -38,17 +38,17 @@ local buttons = {
         onclick = function()
             scoreA = scoreA + 1
         end,
-        font = "button"
+        font = "regular"
     }, {
         text = "+",
         x = function(w, h)
-            return 0.6 * w
+            return 0.65 * w
         end,
         y = function(w, h)
             return 0.7 * h
         end,
         w = function(w, h)
-            return 0.3 * w
+            return 0.1 * w
         end,
         h = function(w, h)
             return 0.09 * h
@@ -56,17 +56,17 @@ local buttons = {
         onclick = function()
             scoreB = scoreB + 1
         end,
-        fontSize = 40
+        font = "regular"
     }, {
         text = "-",
         x = function(w, h)
-            return 0.3 * w
+            return 0.20 * w
         end,
         y = function(w, h)
             return 0.8 * h
         end,
         w = function(w, h)
-            return 0.3 * w
+            return 0.1 * w
         end,
         h = function(w, h)
             return 0.09 * h
@@ -74,17 +74,17 @@ local buttons = {
         onclick = function()
             scoreA = scoreA - 1
         end,
-        font = "button"
+        font = "regular"
     }, {
         text = "-",
         x = function(w, h)
-            return 0.6 * w
+            return 0.65 * w
         end,
         y = function(w, h)
             return 0.8 * h
         end,
         w = function(w, h)
-            return 0.3 * w
+            return 0.1 * w
         end,
         h = function(w, h)
             return 0.09 * h
@@ -92,32 +92,36 @@ local buttons = {
         onclick = function()
             scoreB = scoreB - 1
         end,
-        font = "button"
+        font = "regular"
     }
 }
+local fonts = { }
 
 function love.load()
-    love.graphics.setFont(love.graphics.newFont(80))
     love.window.setMode(800, 600, {
         fullscreen = true
     })
+    fonts.big = love.graphics.newFont("font.ttf", 150)
+    fonts.regular = love.graphics.newFont("font.ttf", 80)
+    fonts.small = love.graphics.newFont("font.ttf", 50)
 end
 
 function love.draw()
     local width, height, _ = love.window.getMode()
+    local score = scoreA .. " x " .. scoreB
 
-    love.graphics.setBackgroundColor(BLACK)
+    love.graphics.setBackgroundColor(PANTONE_561_C)
 
-    -- drawing score
-    love.graphics.print(scoreA, width * 0.3, height * 0.2)
-    love.graphics.print(scoreB, width * 0.6, height * 0.2)
+    love.graphics.setFont(fonts.big)
+    love.graphics.printf(score, width * 0.25, height * 0.2, width * 0.5, "justify")
 
-    -- drawing buttons
     for i, button in pairs(buttons) do
         local button = buttons[i]
         local x = button.x(width, height)
         local y = button.y(width, height)
-        love.graphics.print(button.text, x, y)
+        local w = button.w(width, height)
+        love.graphics.setFont(fonts[button.font])
+        love.graphics.printf(button.text, x, y, w, "center")
     end
 end
 
