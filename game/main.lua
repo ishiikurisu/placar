@@ -1,11 +1,12 @@
 local PANTONE_561_C = { 0, 89/256, 76/256 }
+local PANTONE_COOL_GRAY_1_C = { 217/256, 217/256, 214/256 }
 local scoreA = 0
 local scoreB = 0
 local buttons = {
     {
         text = "ZERAR",
         x = function(w, h)
-            return 0.25 * w
+            return 0.375 * w
         end,
         y = function(w, h)
             return 0.55 * h
@@ -15,10 +16,10 @@ local buttons = {
             scoreB = 0
         end,
         w = function(w, h)
-            return 0.5 * w
+            return 0.25 * w
         end,
         h = function(w, h)
-            return 0.2 * h
+            return 0.095 * h
         end,
         font = "small"
     }, {
@@ -33,7 +34,7 @@ local buttons = {
             return 0.1 * w
         end,
         h = function(w, h)
-            return 0.09 * h
+            return 0.095 * h
         end,
         onclick = function()
             scoreA = scoreA + 1
@@ -51,7 +52,7 @@ local buttons = {
             return 0.1 * w
         end,
         h = function(w, h)
-            return 0.09 * h
+            return 0.095 * h
         end,
         onclick = function()
             scoreB = scoreB + 1
@@ -69,7 +70,7 @@ local buttons = {
             return 0.1 * w
         end,
         h = function(w, h)
-            return 0.09 * h
+            return 0.095 * h
         end,
         onclick = function()
             scoreA = scoreA - 1
@@ -87,7 +88,7 @@ local buttons = {
             return 0.1 * w
         end,
         h = function(w, h)
-            return 0.09 * h
+            return 0.095 * h
         end,
         onclick = function()
             scoreB = scoreB - 1
@@ -102,8 +103,8 @@ function love.load()
         fullscreen = true
     })
     fonts.big = love.graphics.newFont("font.ttf", 150)
-    fonts.regular = love.graphics.newFont("font.ttf", 80)
-    fonts.small = love.graphics.newFont("font.ttf", 50)
+    fonts.regular = love.graphics.newFont("font.ttf", 70)
+    fonts.small = love.graphics.newFont("font.ttf", 45)
 end
 
 function love.draw()
@@ -111,6 +112,7 @@ function love.draw()
     local score = scoreA .. " x " .. scoreB
 
     love.graphics.setBackgroundColor(PANTONE_561_C)
+    love.graphics.setColor(PANTONE_COOL_GRAY_1_C)
 
     love.graphics.setFont(fonts.big)
     love.graphics.printf(score, width * 0.25, height * 0.2, width * 0.5, "justify")
@@ -120,6 +122,7 @@ function love.draw()
         local x = button.x(width, height)
         local y = button.y(width, height)
         local w = button.w(width, height)
+        local h = button.h(width, height)
         love.graphics.setFont(fonts[button.font])
         love.graphics.printf(button.text, x, y, w, "center")
     end
@@ -150,7 +153,7 @@ function isPressed(button, touchX, touchY, width, height)
     local w = button.w(width, height)
     local h = button.h(width, height)
     local r = false
-    if touchX >= x and touchX < x + h and touchY >= y and touchY < y + h then
+    if touchX >= x and touchX < x + w and touchY >= y and touchY < y + h then
         r = true
     end
     return r
