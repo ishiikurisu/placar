@@ -28,13 +28,13 @@ local buttons = {
             return 0.20 * w
         end,
         y = function(w, h)
-            return 0.7 * h
+            return 0.6 * h
         end,
         w = function(w, h)
             return 0.1 * w
         end,
         h = function(w, h)
-            return 0.095 * h
+            return 0.12 * h
         end,
         onclick = function()
             scoreA = scoreA + 1
@@ -46,13 +46,13 @@ local buttons = {
             return 0.65 * w
         end,
         y = function(w, h)
-            return 0.7 * h
+            return 0.6 * h
         end,
         w = function(w, h)
             return 0.1 * w
         end,
         h = function(w, h)
-            return 0.095 * h
+            return 0.12 * h
         end,
         onclick = function()
             scoreB = scoreB + 1
@@ -64,13 +64,13 @@ local buttons = {
             return 0.20 * w
         end,
         y = function(w, h)
-            return 0.8 * h
+            return 0.75 * h
         end,
         w = function(w, h)
             return 0.1 * w
         end,
         h = function(w, h)
-            return 0.095 * h
+            return 0.12 * h
         end,
         onclick = function()
             scoreA = scoreA - 1
@@ -82,13 +82,13 @@ local buttons = {
             return 0.65 * w
         end,
         y = function(w, h)
-            return 0.8 * h
+            return 0.75 * h
         end,
         w = function(w, h)
             return 0.1 * w
         end,
         h = function(w, h)
-            return 0.095 * h
+            return 0.12 * h
         end,
         onclick = function()
             scoreB = scoreB - 1
@@ -101,7 +101,7 @@ local fonts = { }
 function love.load()
     love.window.setFullscreen(true)
     local width, height, _ = love.window.getMode()
-    fonts.big = love.graphics.newFont("font.ttf", 150 * height / 1366)
+    fonts.big = love.graphics.newFont("font.ttf", 200 * height / 1366)
     fonts.regular = love.graphics.newFont("font.ttf", 70 * height / 1366)
     fonts.small = love.graphics.newFont("font.ttf", 45 * height / 1366)
 end
