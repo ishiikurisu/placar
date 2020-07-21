@@ -99,42 +99,41 @@ local buttons = {
 local fonts = { }
 
 function love.load()
-    love.window.setMode(800, 600, {
-        fullscreen = true
-    })
-    fonts.big = love.graphics.newFont("font.ttf", 150)
-    fonts.regular = love.graphics.newFont("font.ttf", 70)
-    fonts.small = love.graphics.newFont("font.ttf", 45)
+    love.window.setFullscreen(true)
+    local width, height, _ = love.window.getMode()
+    fonts.big = love.graphics.newFont("font.ttf", 150 * height / 1366)
+    fonts.regular = love.graphics.newFont("font.ttf", 70 * height / 1366)
+    fonts.small = love.graphics.newFont("font.ttf", 45 * height / 1366)
 end
 
 function love.draw()
     local width, height, _ = love.window.getMode()
     local score = scoreA .. " x " .. scoreB
+    local x, y, w, h
 
     love.graphics.setBackgroundColor(PANTONE_561_C)
     love.graphics.setColor(PANTONE_COOL_GRAY_1_C)
 
     love.graphics.setFont(fonts.big)
-    love.graphics.printf(score, width * 0.25, height * 0.2, width * 0.5, "justify")
+    x = love.window.fromPixels(width * 0.25)
+    y = love.window.fromPixels(height * 0.2)
+    w = love.window.fromPixels(width * 0.5)
+    love.graphics.printf(score, x, y, w, "justify")
 
     for i, button in pairs(buttons) do
         local button = buttons[i]
-        local x = button.x(width, height)
-        local y = button.y(width, height)
-        local w = button.w(width, height)
-        local h = button.h(width, height)
+        x = love.window.fromPixels(button.x(width, height))
+        y = love.window.fromPixels(button.y(width, height))
+        w = love.window.fromPixels(button.w(width, height))
+        h = love.window.fromPixels(button.h(width, height))
         love.graphics.setFont(fonts[button.font])
         love.graphics.printf(button.text, x, y, w, "center")
     end
 end
 
-function love.touchreleased(id, x, y, dx, dy, pressure)
-    pressButtons(x, y)
-end
-
 function love.mousereleased(x, y, button, istouch, presses)
-    if button == 1 then
-        pressButtons(x, y)
+    if button == 1 or istouch then
+        pressButtons(love.window.toPixels(x), love.window.toPixels(y))
     end
 end
 
